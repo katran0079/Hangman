@@ -25,6 +25,10 @@
       <p>Press a letter to begin.</p>
       <div>
         <h2 id="word-blanks">" "</h2>
+        <h2 id="letterguesses"></h2>
+        <h3 id="rightGuess"></h3>
+        <h3 id="wrongGuess"></h3>
+        <h3 id="lives"></h3>
         <h3 id="score">Score</h3>
         <h3 id="wins">Wins:</h3>
         <h3 id="Losses">Losses:</h3>
@@ -46,6 +50,7 @@
       var wins = 0;
       var loss = 0;
       var wrongLetter = [];
+      var rightLetter = [];
       var lives = 9;
       var score = [];
       var userGuesses = [];
@@ -68,8 +73,22 @@
       function scoreboard() {
         document.getElementById("wins").innerHTML = "Wins: " + wins;
         document.getElementById("Losses").innerHTML = "Losses: " + loss;
+        document.getElementById("lives").innerHTML =
+          "Lives Remaining: " + lives;
       }
 
+      document.addEventListener("keypress", event => {
+        var keycode = event.keyCode;
+        var keyWord = String.fromCharCode(keycode);
+        console.log(keyWord);
+        if (wordGuess.indexOf(keyWord) > -1) {
+          rightLetter.push(keyWord);
+        } else {
+          wrongLetter.push(keyWord);
+          lives = lives - 1;
+          console.log(lives);
+        }
+      });
       startgame();
       scoreboard();
     </script>
