@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Ape Guessing Game</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="jumbotron">
+      <h1 class="display-4">Welcome to the Great Ape "Hangman" Game!</h1>
+      <p class="lead">
+        This is a word guessing game based off the ever popular "hangman" game.
+        Your goal is to guess various ape themed words, ranging from species,
+        apes in pop culture, and more!
+      </p>
+      <hr class="my-4" />
+      <p>Press a letter to begin.</p>
+      <div>
+        <h2 id="word-blanks">" "</h2>
+        <h3 id="score">Score</h3>
+        <h3 id="wins">Wins:</h3>
+        <h3 id="Losses">Losses:</h3>
+      </div>
+      <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+    </div>
+
+    <script type="text/javascript">
+      var wordBank = [
+        "donkey kong",
+        "king kong",
+        "gorilla",
+        "orangutan",
+        "chimpanzee",
+        "bonobo",
+        "haramabe",
+        "human"
+      ];
+      var wins = 0;
+      var loss = 0;
+      var wrongLetter = [];
+      var lives = 9;
+      var score = [];
+      var userGuesses = [];
+      var wordGuess;
+      var underscores = [];
+
+      // game functions
+      function startgame() {
+        wordGuess = wordBank[Math.floor(Math.random() * wordBank.length)];
+        console.log(wordGuess);
+
+        for (var i = 0; i < wordGuess.length; i++) {
+          underscores.push("_");
+        }
+        document.getElementById("word-blanks").innerHTML = underscores.join(
+          " "
+        );
+      }
+
+      function scoreboard() {
+        document.getElementById("wins").innerHTML = "Wins: " + wins;
+        document.getElementById("Losses").innerHTML = "Losses: " + loss;
+      }
+
+      startgame();
+      scoreboard();
+    </script>
+  </body>
+</html>
