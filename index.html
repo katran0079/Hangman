@@ -44,7 +44,7 @@
         "orangutan",
         "chimpanzee",
         "bonobo",
-        "haramabe",
+        "harambe",
         "human"
       ];
       var wins = 0;
@@ -52,8 +52,6 @@
       var wrongLetter = [];
       var rightLetter = [];
       var lives = 9;
-      var score = [];
-      var userGuesses = [];
       var wordGuess;
       var underscores = [];
 
@@ -81,12 +79,27 @@
         var keycode = event.keyCode;
         var keyWord = String.fromCharCode(keycode);
         console.log(keyWord);
+        console.log(wordGuess.indexOf(keyWord));
+
         if (wordGuess.indexOf(keyWord) > -1) {
           rightLetter.push(keyWord);
+          underscores[wordGuess.indexOf(keyWord)] = keyWord;
+          console.log(underscores[wordGuess.indexOf(keyWord)]);
+          if (underscores.join("_") == wordGuess) {
+            alert("You win!");
+            win = win + 1;
+            lives = 9;
+          }
         } else {
           wrongLetter.push(keyWord);
           lives = lives - 1;
-          console.log(lives);
+          console.log("lives=" + lives);
+          if (lives < 0) {
+            alert("You lose! Try again!");
+            loss = loss + 1;
+
+            lives = 9;
+          }
         }
       });
       startgame();
