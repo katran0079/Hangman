@@ -28,7 +28,7 @@
         <h2 id="letterguesses"></h2>
         <h3 id="rightGuess"></h3>
         <h3 id="wrongGuess"></h3>
-        <h3 id="lives"></h3>
+        <h3 id="lives">Lives Remaining: 9</h3>
         <h3 id="score">Score</h3>
         <h3 id="wins">Wins:</h3>
         <h3 id="Losses">Losses:</h3>
@@ -38,8 +38,8 @@
 
     <script type="text/javascript">
       var wordBank = [
-        "donkey kong",
-        "king kong",
+        "donkeykong",
+        "kingkong",
         "gorilla",
         "orangutan",
         "chimpanzee",
@@ -59,7 +59,10 @@
       function startgame() {
         wordGuess = wordBank[Math.floor(Math.random() * wordBank.length)];
         console.log(wordGuess);
-
+        underscores = [];
+        lives = 9;
+        document.getElementById("lives").innerHTML =
+          "Lives Remaining: " + lives;
         for (var i = 0; i < wordGuess.length; i++) {
           underscores.push("_");
         }
@@ -79,29 +82,45 @@
         var keycode = event.keyCode;
         var keyWord = String.fromCharCode(keycode);
         console.log(keyWord);
-        console.log(wordGuess.indexOf(keyWord));
 
         if (wordGuess.indexOf(keyWord) > -1) {
           rightLetter.push(keyWord);
-          underscores[wordGuess.indexOf(keyWord)] = keyWord;
-          console.log(underscores[wordGuess.indexOf(keyWord)]);
-          if (underscores.join("_") == wordGuess) {
-            alert("You win!");
-            win = win + 1;
-            lives = 9;
+          for (var i = 0; i < wordGuess.length; i++) {
+            if (wordGuess[i] === keyWord) {
+              underscores[i] = keyWord;
+              console.log(underscores);
+              document.getElementById("rightGuess").innerHTML =
+                "Right Guesses: " + rightLetter;
+              document.getElementById("word-blanks").innerHTML = underscores;
+            }
           }
         } else {
           wrongLetter.push(keyWord);
           lives = lives - 1;
           console.log("lives=" + lives);
-          if (lives < 0) {
-            alert("You lose! Try again!");
-            loss = loss + 1;
+          document.getElementById("wrongGuess").innerHTML =
+            "Wrong Guesses: " + wrongLetter;
+          document.getElementById("lives").innerHTML =
+            "Lives Remaining: " + lives;
 
-            lives = 9;
+          if (lives < 0) {
+            alert("You lose! Play again");
+            loss++;
+            console.log(loss);
+            document.getElementById("Losses").innerHTML = "Losses: " + loss;
+            startgame();
+            return;
           }
         }
+        if (underscores.join("") === wordGuess) {
+          alert("Wow! You won! Play Again!");
+          wins++;
+          document.getElementById("wins").innerHTML = "Wins: " + wins;
+          startgame();
+          return;
+        }
       });
+
       startgame();
       scoreboard();
     </script>
